@@ -31,7 +31,7 @@ import six
 from six.moves import xrange  # pylint: disable=redefined-builtin
 from six.moves import zip  # pylint: disable=redefined-builtin
 import tensorflow as tf
-import tensorflow.contrib.distributions as tfd
+import tensorflow_probability as tfd
 
 from tensorflow.python.eager import context
 from tensorflow.python.framework import function
@@ -1105,7 +1105,7 @@ def ffn_expert_fn_decoder(encoder_internal_size, output_size):
         return sample(loc, scale), loc, scale
     return my_fn
 
-tfd = tf.contrib.distributions
+tfd = tfd.distributions
 
 
 def sample(loc, scale):
@@ -1856,7 +1856,7 @@ def should_generate_summaries():
   Returns:
     a boolean
   """
-    if "while/" in tf.contrib.framework.get_name_scope():
+    if "while/" in tfd.framework.get_name_scope():
         # Summaries don't work well within tf.while_loop()
         return False
     if tf.get_variable_scope().reuse:

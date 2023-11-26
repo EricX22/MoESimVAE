@@ -93,7 +93,13 @@ def main():
     experiment_name = dt.now().strftime('%d-%m_%H-%M-%S-%f')
     random_id = np.random.choice(list(range(99999)), 1)
     experiment_name += '_' + str(format(random_id[0], '05d'))
+
+    args.dir_output = args.dir_output or 'default_output'
+
     dir_output = os.path.join(args.dir_output, experiment_name)
+
+
+
 
     if not os.path.exists(dir_output):
         os.makedirs(dir_output)
@@ -165,16 +171,14 @@ def main():
     test_data_scaled = test_data_scaled[:, ind_gene_filter]
 
     model_hparams['num_markers'] = training_data_scaled.shape[1]
-
+ 
     # fit pca
     pca = PCA()
-    pca = pca.fit(training_data_scaled)
-    pca_transform = pca.transform(training_data_scaled)
+    pca_transform = pca.fit_transform(training_data_scaled)
 
     # fit umap
     um = umap.UMAP()
-    um = um.fit(training_data_scaled)
-    um_transform = um.transform(training_data_scaled)
+    um_transform = um.fit_transform(training_data_scaled)
 
     plt.figure()
     for i, sub in enumerate(training_labels_unique):

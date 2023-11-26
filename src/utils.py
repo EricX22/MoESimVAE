@@ -3,15 +3,17 @@ matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import os
 import tensorflow as tf
-import tensorflow.contrib.distributions as tfd
+import tensorflow_probability as tfd
 from src.moe_utils import SparseDispatcher, flatten_all_but_last, Parallelism
 import six
 import numpy as np
 from sklearn.metrics import f1_score
 import argparse
 
-xav_init = tf.contrib.layers.xavier_initializer
-normal_init = tf.truncated_normal_initializer
+# xav_init = tfd.layers.xavier_initializer
+xav_init = tf.keras.initializers.GlorotNormal()
+#normal_init = tf.truncated_normal_initializer
+normal_init = tf.keras.initializers.RandomNormal(mean=0.0, stddev=1.0)
 zero_init = tf.zeros_initializer
 
 # Different methods for initializing the data

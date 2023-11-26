@@ -1,5 +1,5 @@
 import tensorflow as tf
-import tensorflow.contrib.distributions as tfd
+import tensorflow_probability as tfd
 from src.utils import initializers, activation_fcts
 
 

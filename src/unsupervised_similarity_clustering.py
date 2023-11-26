@@ -1,6 +1,6 @@
 import tensorflow as tf
-from tensorflow.contrib.layers import xavier_initializer
-import tensorflow.contrib.distributions as tfd
+from tensorflow.keras.initializers import GlorotNormal
+import tensorflow_probability as tfd
 import numpy as np
 
 
@@ -34,10 +34,10 @@ class USC:
             self.class_similarity = tf.placeholder(dtype=tf.float32, shape=[self.model_hparams['batch_size'], self.model_hparams['k']], name='class_similarity')
 
         self.w_ik_predict = tf.Variable(1, validate_shape=False, dtype=tf.float32)
-        self.w_ik = tf.get_variable(dtype=tf.float32, name='prob_assignment', shape=[self.model_hparams['batch_size'], self.model_hparams['k']], validate_shape=True, initializer=xavier_initializer())
-        self.alpha_k = tf.get_variable(dtype=tf.float32, name='mixture_weights', shape=[self.model_hparams['k']], validate_shape=True, initializer=xavier_initializer())
-        self.mu_k = tf.get_variable(dtype=tf.float32, name='mean', shape=[self.model_hparams['k'], self.model_hparams['code_size']], validate_shape=True, initializer=xavier_initializer())
-        self.sigma_k = tf.get_variable(dtype=tf.float32, name='covariance', shape=[self.model_hparams['k'], self.model_hparams['code_size']], validate_shape=True, initializer=xavier_initializer())
+        self.w_ik = tf.get_variable(dtype=tf.float32, name='prob_assignment', shape=[self.model_hparams['batch_size'], self.model_hparams['k']], validate_shape=True, initializer=GlorotNormal())
+        self.alpha_k = tf.get_variable(dtype=tf.float32, name='mixture_weights', shape=[self.model_hparams['k']], validate_shape=True, initializer=GlorotNormal())
+        self.mu_k = tf.get_variable(dtype=tf.float32, name='mean', shape=[self.model_hparams['k'], self.model_hparams['code_size']], validate_shape=True, initializer=GlorotNormal())
+        self.sigma_k = tf.get_variable(dtype=tf.float32, name='covariance', shape=[self.model_hparams['k'], self.model_hparams['code_size']], validate_shape=True, initializer=GlorotNormal())
 
         self.softmax_parameter_represenation = tf.get_variable(dtype=tf.float32, name='depict_represenation', shape=[self.model_hparams['code_size'], self.model_hparams['k']])
 
